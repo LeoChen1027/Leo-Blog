@@ -1,0 +1,6 @@
+spring:
+  thymeleaf:
+    mode: HTML
+  profiles:
+    active: pro
+comment.avatar: /images/eva1.jpg

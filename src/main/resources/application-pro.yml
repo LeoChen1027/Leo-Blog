@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://121.199.67.59:3306/blog?serverTimezone=GMT&&characterEncoding=utf-8
+    username: root
+    password: 84994800
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  thymeleaf:
+    prefix: classpath:/templates/
+
+logging:
+  level:
+    root: warn
+    cn.leo.leoblog: info
+  file: log/blog-pro.log
+server:
+  port: 80

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title th:replace="${title}">博客管理</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
+    <link rel="stylesheet" href="../../static/lib/editormd/css/editormd.css" th:href="@{/lib/editormd/css/editormd.min.css}">
+    <link rel="stylesheet" href="../../static/css/me.css" th:href="@{/css/me.css}">
+    <link rel="stylesheet" href="../../static/lib/typo/typo.css" th:href="@{/lib/typo/typo.css}">
+    <link rel="stylesheet" href="../../static/lib/animate/animate.css" th:href="@{/lib/animate/animate.css}">
+    <link rel="stylesheet" href="../../static/lib/prism/prism.css" th:href="@{/lib/prism/prism.css}">
+    <link rel="stylesheet" href="../../static/lib/tocbot/tocbot.css" th:href="@{/lib/tocbot/tocbot.css}">
+
+</head>
+<body>
+
+<!--导航-->
+<nav th:fragment="menu(n)" class="ui inverted attached segment m-padded-tb-mini" >
+    <div class="ui container">
+        <div class="ui inverted secondary stackable menu">
+            <h2 class="ui blue header item">管理后台</h2>
+            <a href="#" th:href="@{/admin/blogs}" class="m-item item m-mobile-hide" th:classappend="${n==1} ?'active'"><i class="home icon"></i>博客</a>
+            <a href="#" th:href="@{/admin/types}" class="m-item item m-mobile-hide" th:classappend="${n==2} ?'active'"><i class="idea icon"></i>分类</a>
+            <a href="#" th:href="@{/admin/tags}" class="m-item item m-mobile-hide" th:classappend="${n==3} ?'active'"><i class="tags icon"></i>标签</a>
+            <div class="right m-item m-mobile-hide menu">
+                <div class="ui dropdown item">
+                    <div class="text">
+                        <img class="ui avatar image" src="https://unsplash.it/100/100?image=1005">
+                        陈昊
+                    </div>
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <a href="#" th:href="@{/admin/logout}" class="item">注销</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
+<div th:fragment="menu2(n)" class="ui attached pointing menu">
+    <div class="ui container">
+        <div class="right menu">
+            <a href="#" class="item">发布</a>
+            <a href="#" class="blue active item">列表</a>
+        </div>
+    </div>
+</div>
+
+<!--底部footer-->
+<footer th:fragment="footer" class="ui segment  m-padded-tb-one footer">
+    <div class="ui center aligned container">
+        <div class="ui divider section "></div>
+        <div class="ui stackable grid">
+            <div class="ten wide column">
+                <h3 class="ui header">LeoBlog</h3>
+                <p class="text1">机核从2010年开始一直致力于分享游戏玩家的生活，以及深入探讨游戏相关的文化。</p>
+                <p class="text1">我们开发原创的电台以及视频节目，一直在不断寻找民间高质量的内容创作者。</p>
+                <br>
+                <p class="text1">我们坚信游戏不止是游戏，游戏中包含的科学，文化，历史等各个层面的知识和故事，
+                    它们同时也会辐射到二次元甚至电影的领域，这些内容非常值得分享给热爱游戏的您。</p>
+            </div>
+            <div class="six wide column">
+                <h4 class="ui header">联系我:</h4>
+                <div class="ui link list">
+                    <a href="#" class="item">QQ:814787314</a>
+                    <a href="#" class="item">邮箱:a814787314@gmail.com</a>
+                </div>
+            </div>
+        </div>
+        <div class="ui divider section "></div>
+        <p class="m-text-thin m-text-spaced">Copyright © 2019 - 2020 LeoBlog Designed by LeoChen</p>
+    </div>
+</footer>
+
+<!--/*/<th:block th:replace="_fragments :: script">/*/-->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
+<!--/*/</th:block>/*/-->
+
+<script>
+    $('.menu.toggle').click(function () {
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+
+    $('.ui.dropdown').dropdown({
+        on : 'hover'
+    });
+
+</script>
+</body>
+</html>

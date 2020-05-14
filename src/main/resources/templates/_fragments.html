@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title th:replace="${title}">博客。。。。。</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="../static/css/index.css" th:href="@{/css/index.css}">
+    <link rel="stylesheet" href="../static/css/me.css" th:href="@{/css/me.css}">
+    <link rel="stylesheet" href="../static/lib/typo/typo.css" th:href="@{/lib/typo/typo.css}">
+    <link rel="stylesheet" href="../static/lib/animate/animate.css" th:href="@{/lib/animate/animate.css}">
+    <link rel="stylesheet" href="../static/lib/prism/prism.css" th:href="@{/lib/prism/prism.css}">
+    <link rel="stylesheet" href="../static/lib/tocbot/tocbot.css" th:href="@{/lib/tocbot/tocbot.css}">
+</head>
+
+<body>
+    <nav th:fragment="menu(n)" class="ui segment m-padded-tb-mini-small"><!---->
+        <div class="ui grid">
+            <div class="five wide column center2">
+                <div class="ui secondary basic column stackable menu">
+                    <a href="#" class="m-item item m-mobile-hidden title1" th:classappend="${n==1} ?'active'" th:href="@{/}">首页</a>
+                    <a href="#" class="m-item item m-mobile-hidden title1" th:classappend="${n==2} ?'active'" th:href="@{/type/-1}">分类</a>
+                    <a href="#" class="m-item item m-mobile-hidden title1" th:classappend="${n==3} ?'active'" th:href="@{/tag/-1}">标签</a>
+                    <a href="#" class="m-item item m-mobile-hidden title1" th:classappend="${n==4} ?'active'" th:href="@{/archive}">归档</a>
+                    <a href="#" class="m-item item m-mobile-hidden title1" th:classappend="${n==5} ?'active'" th:href="@{/about}">关于我</a>
+                </div>
+            </div>
+            <div class="six wide column center2">
+                <p class="ui blue header title1 center1">Leo Chen</p>
+            </div>
+            <div class="five wide column right aligned m-item m-mobile-hidden center2">
+                <form name="search" action="#" th:action="@{/search}" method="post" target="_blank">
+                    <div class="ui icon transparent input ">
+                        <input type="text" name="query" placeholder="Search..." th:value="${query}">
+                        <i onclick="document.forms['search'].submit()" class="search link icon"></i>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <a href="#" class="ui menu toggle black icon button m-top-right m-mobile-show">
+            <i class="sidebar icon"></i>
+        </a>
+        <div class="push"></div>
+    </nav>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <footer th:fragment="footer" class="ui segment  m-padded-tb-one footer">
+        <div class="ui center aligned container">
+            <div class="ui divider section "></div>
+            <div class="ui stackable grid">
+                <div class="ten wide column">
+                    <h3 class="ui header">LeoBlog</h3>
+                    <p class="text1">LeoBlog建立于2020年，用以记录生活及分享学习中的所见所感所得。</p>
+                    <p class="text1">千里之行始于足下，虽是初创，但希望可以长期维护来作为进步成长的见证。</p>
+                    <br>
+                    <p class="text1">我坚信生活不只是眼前的开机混底薪，还要包括诗和远方。</p>
+                 </div>
+                <div class="six wide column">
+                    <h4 class="ui header">联系我:</h4>
+                    <div class="ui link list">
+                        <a href="#" class="item">QQ:814787314</a>
+                        <a href="#" class="item">邮箱:a814787314@gmail.com</a>
+                    </div>
+                </div>
+            </div>
+            <div class="ui divider section "></div>
+            <p class="m-text-thin m-text-spaced">Copyright © 2019 - 2020 LeoBlog Designed by LeoChen</p>
+            <p class="m-text-thin m-text-spaced">鄂ICP备20006544号</p>
+        </div>
+    </footer>
+
+    <div th:fragment="script">
+        <script src="//unpkg.com/vue/dist/vue.js"></script>
+        <script src="//unpkg.com/element-ui@2.13.1/lib/index.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+        <script src="../../static/lib/editormd/editormd.min.js" th:src="@{/lib/editormd/editormd.min.js}"></script>
+        <script src="../../static/lib/tocbot/tocbot.js" th:src="@{/lib/tocbot/tocbot.js}"></script>
+        <script>
+            $('#newblogs-container').load("[[@{/footer/newblog}]]");/*/footer/newblog*/
+        </script>
+    </div>
+
+</body>
+</html>

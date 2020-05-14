@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="_fragments::head(~{::title})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>博客首页</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="../static/css/me.css" ><!--相对路径要通过th：href来引用-->
+    <link rel="stylesheet" href="../static/css/index.css">
+</head>
+<body>
+
+
+    <!--导航-->
+    <nav th:replace="_fragments :: menu(1)" class="ui segment m-padded-tb-mini-small"><!---->
+        <div class="ui grid">
+            <div class="five wide column center2">
+                <div class="ui secondary basic column stackable menu">
+                    <a href="#" class="m-item item m-mobile-hidden title1" th:classappend="${n==1} ?'active'" th:href="@{/}">首页</a>
+                    <a href="#" class="m-item item m-mobile-hidden title1" th:classappend="${n==2} ?'active'" th:href="@{/type/-1}">分类</a>
+                    <a href="#" class="m-item item m-mobile-hidden title1" th:classappend="${n==3} ?'active'" th:href="@{/tag/-1}">标签</a>
+                    <a href="#" class="m-item item m-mobile-hidden title1" th:classappend="${n==4} ?'active'" th:href="@{/archive}">归档</a>
+                    <a href="#" class="m-item item m-mobile-hidden title1" th:classappend="${n==5} ?'active'" th:href="@{/about}">关于我</a>
+                </div>
+            </div>
+            <div class="six wide column center2">
+                <p class="ui blue header title1 center1">Leo Chen</p>
+            </div>
+            <div class="five wide column right aligned m-item m-mobile-hidden center2">
+                <form name="search" action="#" th:action="@{/search}" method="post" target="_blank">
+                    <div class="ui icon transparent input ">
+                        <input type="text" name="query" placeholder="Search..." th:value="${query}">
+                        <i onclick="document.forms['search'].submit()" class="search link icon"></i>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <a href="#" class="ui menu toggle black icon button m-top-right m-mobile-show">
+            <i class="sidebar icon"></i>
+        </a>
+        <div class="push"></div>
+    </nav>
+
+    <!--中间内容-->
+    <div class="m-padded-tb-four">
+        <div class="ui container">
+            <div id="app">
+                <template>
+                    <el-carousel indicator-position="outside">
+                        <el-carousel-item v-for="(item,index) in 1" :key="index" th:each="rblog:${recommendBlogs}">
+                            <div class="ui stackable grid" >
+                                <div class="eleven wide column stackable">
+                                    <img src="/Path/bvs.jpg" th:src="${rblog.firstPicture}"class="ui focusImage rounded image">
+                                </div>
+                                <div class="five wide column stackable">
+                                    <div class="content">
+                                        <a href="#" th:href="@{/blog/{id}(id=${rblog.id})}" style="color: orangered" target="_blank" class="focusHeader" th:text="${rblog.title}">魂学研习者《血源诅咒》篇</a>
+                                        <div class="description m-text-setting">
+                                            <br>
+                                            <P th:text="${rblog.description}">要准确了解《血源诅咒》的世界观，首先我们要从它的基本设定开始说起
+                                                要准确了解《血源诅咒》的世界观，首先我们要从它的基本设定开始说起
+                                                要准确了解《血源诅咒》的世界观，首先我们要从它的基本设定开始说起</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </el-carousel-item>
+                    </el-carousel>
+                </template>
+            </div>
+            <br>
+            <br>
+            <div class="ui basic stackable equal width grid link cards">
+                <div class="column card" th:each="vblog:${mostviewBlogs}">
+                    <img class="ui rounded avatarImage1 image" src="/Path/eva1.jpg" th:src="${vblog.firstPicture}">
+                    <br>
+                    <br>
+                    <div class="content">
+                        <a href="#" class="header" th:href="@{/blog/{id}(id=${vblog.id})}" target="_blank"th:text="${vblog.title}">魂学研习者《血源诅咒》篇</a>
+                        <div class="meta">
+                            <a th:text="${vblog.type.name}">学习</a>
+                        </div>
+                        <div class="description">
+                            <span th:text="${vblog.description}">Matthew is an interior designer living in New York.</span>
+                        </div>
+                    </div>
+                    <div class="extra content">
+                        <span class="right floated" th:text="${vblog.updateTime}">
+                            Joined in 2013
+                        </span>
+                        <span>
+                        <i class="eye icon"></i>
+                            <a th:text="${vblog.views}">75 Friends</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <br>
+            <div class="ui stackable grid">
+                <!--左边博客列表-->
+                <div class="ui eleven wide column stackable">
+                    <!--头部-->
+                    <div class="ui top attached segment">
+                        <div class="ui middle aligned two column grid">
+                            <div class="column">
+                                <h3 class="ui blueheader">博客</h3>
+                            </div>
+                            <div class="right aligned column">
+                                共<h2 class="ui orange header m-inline-block m-text-thin" th:text="${page.totalElements}">14</h2>篇
+                            </div>
+                        </div>
+                    </div>
+                    <!--中间内容-->
+                    <div class="ui attached  segment m-padded-tb-mini">
+                        <div class="ui padded vertical segment m-padded-tb-index " th:each="blog:${page.content}">
+                            <div class="ui middle aligned mobile reversed stackable grid" >
+                                <div class="eleven wide column ">
+                                    <h3 class="ui header"><a th:href="@{/blog/{id}(id=${blog.id})}" target="_blank" class="m-black" th:text="${blog.title}">魂学研习者《血源诅咒》篇</a></h3>
+                                    <p class="m-text-setting" th:text="|${blog.description}......|">要准确了解《血源诅咒》的世界观，首先我们要从它的基本设定开始说起</p>
+                                    <div class="ui grid">
+                                        <div class="eleven wide column">
+                                            <div class="ui mini horizontal link list">
+                                                <div class="item">
+                                                    <img src="https://picsum.photos/id/1011/100/100"  alt="" class="ui middle aligned avatar image">
+                                                    <div class="content">
+                                                        <a href="#" class="header" th:text="${blog.user.nickname}">
+                                                            Leo Chen
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="item">
+                                                    <i class="calendar icon"></i> <span th:text="${#dates.format(blog.updateTime,'yyyy-MM-dd')}">2020-4-4</span>
+                                                </div>
+                                                <div class="item">
+                                                    <i class="eye icon"></i> <span th:text="${blog.views}">4396</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="right aligned five wide column">
+                                            <a href="#" target="_blank" class="ui middle aligned bluebasic label m-padded-mini m-text-thin" th:text="${blog.type.name}">认知升级</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="five wide column">
+                                    <a href="#" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank">
+                                        <img src="https://picsum.photos/id/1011/800/500"  th:src="${blog.firstPicture}" alt="" class="ui rounded image">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="ui bottom attached segment" th:if="${page.totalPages}>1">
+                        <div class="ui middle aligned two column grid">
+                            <div class="column">
+                                <a onclick="page(this)" th:href="@{/(page=${page.number}-1)}" class="item" th:unless="${page.first}">上一页</a>
+                            </div>
+                            <div class="right aligned column">
+                                <a onclick="page(this)" th:href="@{/(page=${page.number}+1)}" class=" item" th:unless="${page.last}">下一页</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--右边top-->
+                <div class="five wide column">
+                    <!--分类-->
+                    <div class="ui segments">
+                        <div class="ui secondary segment">
+                            <div class="ui two column grid">
+                                <div class="column">
+                                    <i class="idea icon"></i>分类
+                                </div>
+                                <div class="right aligned column">
+                                    <a href="#" th:href="@{/type/-1}" target="_blank">More...</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui bluesegment">
+                            <div class="ui fluid vertical menu" >
+                                <a href="#" class="item" th:each="type:${types}">
+                                    <span  th:text="${type.name}">学习日志</span>
+                                    <div class="ui blue basic left pointing label" th:text="${#arrays.length(type.blogs)}">16</div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!--标签(可以自适应)-->
+                    <div class="ui segments m-margin-tb-small">
+                        <div class="ui secondary segment">
+                            <div class="ui two column grid">
+                                <div class="column">
+                                    <i class="idea icon"></i>标签
+                                </div>
+                                <div class="right aligned column">
+                                    <a href="#" th:href="@{/tag/-1}" target="_blank">More...</a>
+                                </div>
+                            </div>
+                            <div class="ui bluesegment">
+                                <a href="#" target="_blank" class="ui blue basic left pointing label m-margin-tb-tiny" th:each="tag:${tags}">
+                                    <span th:text="${tag.name}">方法论</span>
+                                    <div class="detail" th:text="${#arrays.length(tag.blogs)}">23</div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!--最新推荐-->
+                    <!--        <div class="ui segments m-margin-tb-small">
+                        <div class="ui secondary segment" >
+                            <div class="ui two column grid">
+                                <div class="column">
+                                    <i class="bookmark icon"></i>好文推荐
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui bluesegment" th:each="blog:${recommendBlogs}">
+                            <a href="#" target="_blank" class="m-black" th:text="${blog.title}">用户故事</a>
+                        </div>
+                    </div>-->
+                    <!--二维码-->
+<!--                    <h4 class="ui horizontal divider header m-margin-tb-small" style="color: yellow">扫码关注我</h4>
+                    <div class="ui centered card m-margin-tb-two" style=" width: 200px">
+                        <img src="../static/images/weixin2.png" th:src="@{/images/weixin2.png}" alt="" class="ui rounded image" >
+                    </div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <!--底部footer-->
+    <footer th:replace="_fragments::footer" class="ui vertical segment m-padded-tb-five footer">
+        <div class="ui center aligned container">
+            <div class="ui divider section "></div>
+            <div class="ui stackable grid">
+                <div class="ten wide column">
+                    <h3 class="ui header">LeoBlog</h3>
+                    <p class="text1">机核从2010年开始一直致力于分享游戏玩家的生活，以及深入探讨游戏相关的文化。</p>
+                    <p class="text1">我们开发原创的电台以及视频节目，一直在不断寻找民间高质量的内容创作者。</p>
+                    <br>
+                    <p class="text1">我们坚信游戏不止是游戏，游戏中包含的科学，文化，历史等各个层面的知识和故事，
+                        它们同时也会辐射到二次元甚至电影的领域，这些内容非常值得分享给热爱游戏的您。</p>
+                </div>
+                <div class="six wide column">
+                    <h4 class="ui header">联系我:</h4>
+                    <div class="ui link list">
+                        <a href="#" class="item">QQ:814787314</a>
+                        <a href="#" class="item">邮箱:a814787314@gmail.com</a>
+                    </div>
+                </div>
+            </div>
+            <div class="ui divider section "></div>
+            <p class="m-text-thin m-text-spaced">Copyright © 2019 - 2020 LeoBlog Designed by LeoChen</p>
+            <p class="m-text-thin m-text-spaced">鄂ICP备20006544号</p>
+        </div>
+    </footer>
+
+<div th:replace="_fragments::script">
+    <script src="//unpkg.com/vue/dist/vue.min.js"></script>
+    <script src="//unpkg.com/element-ui@2.13.1/lib/index.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+</div>
+<script>
+    $('.menu.toggle').click(function () {
+        $('.m-item').toggleClass('m-mobile-hidden');
+    })
+
+    new Vue().$mount('#app');
+</script>
+</body>
+</html>
